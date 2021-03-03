@@ -1,0 +1,3 @@
+﻿  main.cpp
+D:\Computer Graphics\Ray_Tracer\main.cpp(12,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Ray_Tracer.vcxproj -> D:\Computer Graphics\Ray_Tracer\Debug\Ray_Tracer.exe
