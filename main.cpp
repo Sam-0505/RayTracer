@@ -24,4 +24,5 @@ int main()
             std::cout << ir << "\t" << ig << "\t" << ib << "\n";
         }
     }
+    std::cerr << "\nDone\n";
 }
