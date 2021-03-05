@@ -1,3 +1,6 @@
 ﻿  main.cpp
-D:\Computer Graphics\Ray_Tracer\src\main.cpp(14,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+D:\Computer Graphics\Ray_Tracer\src\main.cpp(12,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Computer Graphics\Ray_Tracer\src\main.cpp(20,36): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\Computer Graphics\Ray_Tracer\src\main.cpp(36,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+D:\Computer Graphics\Ray_Tracer\src\main.cpp(42,68): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
   Ray_Tracer.vcxproj -> D:\Computer Graphics\Ray_Tracer\Debug\Ray_Tracer.exe

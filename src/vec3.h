@@ -79,7 +79,7 @@ class vec3
 };
 
 //Creating aliases
-using point = vec3;
+using point3 = vec3;
 using color = vec3;
 
 inline std::ostream& operator<<(std::ostream &out, vec3 &v)
