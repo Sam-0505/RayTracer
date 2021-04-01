@@ -39,7 +39,7 @@ int main()
         {
             float u = i / (img_width-1);
             float v=j / (img_height-1);
-            ray r = ray(origin, upper_left_corner+u*horizontal-(1.0-v)*vertical);//starting from upper left corner send rays in a loo
+            ray r = ray(origin, upper_left_corner+u*horizontal-(1.0-v)*vertical);//starting from upper left corner send rays to every pixel
             color pixel_col = ray_color(r);
             write_color(std::cout, pixel_col);
         }
