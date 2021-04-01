@@ -1,4 +1,4 @@
-// Ray_Tracer.cpp : This file contains the 'main' function. Program execution begins and ends there.
+﻿// Ray_Tracer.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <iostream>
@@ -6,14 +6,31 @@
 #include "color.h"
 #include "ray.h"
 
+color ray_color(ray r);
+bool hit_sphere(const point3& center, float radius, const ray& r);
+
 color ray_color(ray r)
 {
+    if (hit_sphere(point3(0, 0, -1), 0.5, r))
+        return color(1, 0, 0);
     vec3 unit_dir = unit(r.direction());
     float t = (unit_dir.x() + 1.0) * 0.5;//The x will vary from (-1,1) so map it to (0,1)
     color pcol = t * color(1, 1, 1) + (1 - t) * color(0, 0, 1);
     return pcol;
 
 }
+
+bool hit_sphere(const point3& center,float radius,const ray& r)
+{
+    // When solving a sphere equation with a ray, the final equation is a quadratic eqn:(t^2)(b⋅b)+2tb⋅(A−C)+(A−C)⋅(A−C)−r2=0
+    vec3 oc = r.origin() - center;
+    float a = dot(r.direction(), r.direction());
+    float b = 2 * dot(r.direction(), oc);
+    float c = dot(oc, oc) - (radius * radius);
+    float D2 = b * b - 4 * a * c;//This is discriminent, if positive the ray hits the sphere otherwise not
+    return (D2 >= 0);
+}
+
 int main()
 {
     //Image
