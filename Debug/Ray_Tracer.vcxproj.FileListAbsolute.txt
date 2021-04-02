@@ -1,2 +1,0 @@
-D:\Computer Graphics\Ray_Tracer\Debug\Ray_Tracer.exe
-D:\Computer Graphics\Ray_Tracer\Debug\Ray_Tracer.pdb
