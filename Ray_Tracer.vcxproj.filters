@@ -29,10 +29,13 @@
     <ClInclude Include="src\ray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\hittable.h">
+    <ClInclude Include="src\sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\sphere.h">
+    <ClInclude Include="src\object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\obj_list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,10 +2,10 @@
 
 #include<iostream>
 #include "vec3.h"
-#include "hittable.h"
+#include "object.h"
 #include "ray.h"
 
-class sphere : public hittable
+class sphere : public object
 {
 	public:
 		point3 center;
@@ -41,6 +41,7 @@ bool sphere::on_hit(float tmin, float tmax, const ray& r, hit_values& hit_val) c
 
     hit_val.t = root;
     hit_val.point = r.at(root);
-    hit_val.normal = unit(hit_val.point - center);
+    vec3 out_normal = unit(hit_val.point - center);
+    hit_val.set_normal(r, out_normal);
     return true;
 }
