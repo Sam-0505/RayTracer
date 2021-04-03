@@ -16,8 +16,8 @@ color ray_color(ray r)
     if (t >= 0.0)
     {
         vec3 n = unit(r.at(t) - centre);
-        color k = 0.5 * (n + 1);//clustured the values of normal from (-1,1) to (0,1)
-        return k;
+        color pcol = 0.5 * (n + 1);//clustured the values of normal from (-1,1) to (0,1)
+        return pcol;
     }
     vec3 unit_dir = unit(r.direction());
     float i = (unit_dir.y() + 1.0) * 0.5;//The x will vary from (-1,1) so map it to (0,1)
