@@ -11,6 +11,12 @@ class sphere : public hittable
 		point3 center;
 		float radius;
 
+    public:
+        sphere(){}
+        sphere(point3 cen, float rad)
+            :center(cen), radius(rad)
+        {}
+
 		virtual bool on_hit(float tmin, float tmax, const ray& r, hit_values& hit_val) const override;
 };
 

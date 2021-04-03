@@ -5,17 +5,19 @@
 #include "vec3.h"
 #include "color.h"
 #include "ray.h"
+#include "sphere.h"
 
 color ray_color(ray r);
-float hit_sphere(const point3& center, float radius, const ray& r);
+//float hit_sphere(const point3& center, float radius, const ray& r);
 
 color ray_color(ray r)
 {
-    point3 centre = point3(0, 0, -1);
-    float t = hit_sphere(centre, 0.5, r);
-    if (t >= 0.0)
+    point3 cen = point3(0, 0, -1); //centre of the sphere
+    sphere sp = sphere(cen, 0.5);
+    hit_values hit_val;
+    if(sp.on_hit(0, INFINITY, r, hit_val))
     {
-        vec3 n = unit(r.at(t) - centre);
+        vec3 n = unit(hit_val.point - cen);
         color pcol = 0.5 * (n + 1);//clustured the values of normal from (-1,1) to (0,1)
         return pcol;
     }
@@ -26,23 +28,23 @@ color ray_color(ray r)
 
 }
 
-float hit_sphere(const point3& center,float radius,const ray& r)
-{
-    // When solving a sphere equation with a ray, the final equation is a quadratic eqn:(t^2)(b⋅b)+2tb⋅(A−C)+(A−C)⋅(A−C)−r2=0
-    vec3 oc = r.origin() - center;
-    float a = dot(r.direction(), r.direction());
-    float half_b = dot(r.direction(), oc);
-    float c = dot(oc, oc) - (radius * radius);
-    float small_d = half_b*half_b - a * c;//This is discriminent, if positive the ray hits the sphere otherwise not
-
-    if (small_d < 0.0)
-        return -1.0;
-    else
-    {
-        float t = (-half_b - sqrt(small_d)) / a;
-        return t;
-    }
-}
+//float hit_sphere(const point3& center,float radius,const ray& r)
+//{
+//    // When solving a sphere equation with a ray, the final equation is a quadratic eqn:(t^2)(b⋅b)+2tb⋅(A−C)+(A−C)⋅(A−C)−r2=0
+//    vec3 oc = r.origin() - center;
+//    float a = dot(r.direction(), r.direction());
+//    float half_b = dot(r.direction(), oc);
+//    float c = dot(oc, oc) - (radius * radius);
+//    float small_d = half_b*half_b - a * c;//This is discriminent, if positive the ray hits the sphere otherwise not
+//
+//    if (small_d < 0.0)
+//        return -1.0;
+//    else
+//    {
+//        float t = (-half_b - sqrt(small_d)) / a;
+//        return t;
+//    }
+//}
 
 int main()
 {
