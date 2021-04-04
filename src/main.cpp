@@ -8,6 +8,7 @@
 #include "sphere.h"
 #include "obj_list.h"
 #include "object.h"
+#include "utils.h"
 
 using std::make_shared;
 using std::shared_ptr;
@@ -18,7 +19,7 @@ color ray_color(ray r,obj_list& scene);
 color ray_color(ray r,obj_list& scene)
 {
     hit_values hit_val;
-    if(scene.on_hit(0, INFINITY, r, hit_val))
+    if(scene.on_hit(0, infinity, r, hit_val))
     {
         //color pcol = hit_val.front_face * color(1, 1, 1);
         color pcol = 0.5 * (hit_val.normal + 1);//clustured the values of normal from (-1,1) to (0,1)
