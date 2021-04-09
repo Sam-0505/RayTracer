@@ -9,6 +9,7 @@
 #include "obj_list.h"
 #include "object.h"
 #include "utils.h"
+#include "camera.h"
 
 using std::make_shared;
 using std::shared_ptr;
@@ -55,6 +56,8 @@ int main()
     scene.add(make_shared<sphere>(point3(0, 0, -1), 0.5));
     scene.add(make_shared<sphere>(point3(0, -100.5, -1), 100));
 
+    camera cam;
+
     std::cout << "P3\n" << img_width << "\t" << img_height << "\n" << 255<<"\n";
     for (float j = img_height - 1; j >= 0; j--)
     {
@@ -62,7 +65,8 @@ int main()
         {
             float u = i / (img_width-1);
             float v=j / (img_height-1);
-            ray r = ray(origin, upper_left_corner+u*horizontal-(1.0-v)*vertical);//starting from upper left corner send rays to every pixel
+            //ray r = ray(origin, upper_left_corner+u*horizontal-(1.0-v)*vertical);//starting from upper left corner send rays to every pixel
+            ray r = cam.get_ray(u, v);
             color pixel_col = ray_color(r,scene);
             write_color(std::cout, pixel_col);
         }
