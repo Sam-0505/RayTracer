@@ -3,11 +3,19 @@
 
 #include <iostream>
 #include "./vec3.h"
+#include "utils.h"
 
-void write_color(std::ostream &out,color &pixCol)
+void write_color(std::ostream &out,color &pixel_col, int samples)
 {
-	out << static_cast<int>(255.999 * pixCol.x()) << "\t"
-		<< static_cast<int>(255.999 * pixCol.y()) << "\t"
-		<< static_cast<int>(255.999 * pixCol.z())<<"\n";
+	//If number of samples is x, x number color values were added using fractional ray values
+	//Now we average out the values which gives anti-aliasing effect
+	color pixCol = pixel_col /(1.0*samples);
+	//std::cout << static_cast<int>(256 * clamp(pixCol.x(), 0, 0.99)) << "\t"
+		//<< static_cast<int>(256 * clamp(pixCol.y(), 0, 0.99)) << "\t"
+		//<< static_cast<int>(256 * clamp(pixCol.z(), 0, 0.99)) << "\n";
+
+	out << static_cast<int>(256 * clamp(pixCol.x(),0,0.99)) << "\t"
+		<< static_cast<int>(256 * clamp(pixCol.y(),0,0.99)) << "\t"
+		<< static_cast<int>(256 * clamp(pixCol.z(),0,0.99))<<"\n";
 }
 #endif

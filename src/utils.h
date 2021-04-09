@@ -23,12 +23,25 @@ inline float degtorad(float deg)
 
 inline float rand_f()
 {
-	return rand() / (RAND_MAX);
+
+	float f= rand();
+	float n = f / (RAND_MAX);
+	return n;
 }
 
 inline float rand_f(float min, float max)
 {
 	return min + ((max - min) * rand_f());
+}
+
+inline float clamp(float k,float x, float y)//K is clamped between x and y
+{
+	if (k < x)
+		return x;
+	else if (k > y)
+		return y;
+	else
+		return k;
 }
 
 

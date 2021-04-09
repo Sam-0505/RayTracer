@@ -28,7 +28,8 @@ color ray_color(ray r,obj_list& scene)
     }
     vec3 unit_dir = unit(r.direction());
     float i = (unit_dir.y() + 1.0) * 0.5;//The x will vary from (-1,1) so map it to (0,1)
-    color pcol = (1-i)* color(1, 1, 1) + i * color(0.5, 0.5, 1);
+    //color pcol = (1-i)* color(1, 1, 1) + i * color(0.5, 0.5, 1);
+    color pcol = (1 - i) * color(1, 1, 1) + i * color(0.5, 0.5, 1);
     return pcol;
 }
 
@@ -52,23 +53,31 @@ int main()
     point3 upper_left_corner = origin - (horizontal / 2) + (vertical / 2) - focal;
 
     //Set the scene
+    //Add the objects in the scene
     obj_list scene;
     scene.add(make_shared<sphere>(point3(0, 0, -1), 0.5));
     scene.add(make_shared<sphere>(point3(0, -100.5, -1), 100));
 
-    camera cam;
+    //Camera 
+    camera cam = camera();
+
+    //Rendering settings
+    int samples = 20;
 
     std::cout << "P3\n" << img_width << "\t" << img_height << "\n" << 255<<"\n";
     for (float j = img_height - 1; j >= 0; j--)
     {
         for (float i = 0; i < img_width; i++)
         {
-            float u = i / (img_width-1);
-            float v=j / (img_height-1);
-            //ray r = ray(origin, upper_left_corner+u*horizontal-(1.0-v)*vertical);//starting from upper left corner send rays to every pixel
-            ray r = cam.get_ray(u, v);
-            color pixel_col = ray_color(r,scene);
-            write_color(std::cout, pixel_col);
+            color pixel_col=color(0,0,0);
+            for (int k = 0; k < samples; k++)
+            {
+                float u = (i+rand_f())/ (img_width - 1);
+                float v = (j+rand_f())/ (img_height - 1);
+                ray r = cam.get_ray(u, v);
+                pixel_col += ray_color(r, scene);
+            }
+            write_color(std::cout, pixel_col,samples);
         }
     }
     std::cerr << "\nDone\n";
