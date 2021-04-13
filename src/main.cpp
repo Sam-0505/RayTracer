@@ -14,21 +14,26 @@
 using std::make_shared;
 using std::shared_ptr;
 
-color ray_color(ray r,obj_list& scene);
+color ray_color(ray r,obj_list& scene,int bounce);
 //float hit_sphere(const point3& center, float radius, const ray& r);
 
-color ray_color(ray r,obj_list& scene)
+color ray_color(ray r,obj_list& scene,int bounce)
 {
     hit_values hit_val;
-    if(scene.on_hit(0, infinity, r, hit_val))
+    if (bounce <= 0)
     {
-        //color pcol = hit_val.front_face * color(1, 1, 1);
-        color pcol = 0.5 * (hit_val.normal + 1);//clustured the values of normal from (-1,1) to (0,1)
-        return pcol;
+        std::cerr << "Bounces finished\n";
+        return color(1, 0, 0);
+    }
+    if(scene.on_hit(0.001, infinity, r, hit_val))
+    {
+        point3 target = hit_val.point + hit_val.normal + rand_small_vec();
+        return 0.5 * (ray_color(ray(hit_val.point, target - hit_val.point), scene, bounce-1));
+        //color pcol = 0.5 * (hit_val.normal + 1);//clustured the values of normal from (-1,1) to (0,1)
+        //return pcol;
     }
     vec3 unit_dir = unit(r.direction());
     float i = (unit_dir.y() + 1.0) * 0.5;//The x will vary from (-1,1) so map it to (0,1)
-    //color pcol = (1-i)* color(1, 1, 1) + i * color(0.5, 0.5, 1);
     color pcol = (1 - i) * color(1, 1, 1) + i * color(0.5, 0.5, 1);
     return pcol;
 }
@@ -37,7 +42,7 @@ int main()
 {
     //Image
     float aspect_ratio = 16.0 / 9.0;
-    int img_height = 450;
+    int img_height = 360;
     int img_width = static_cast<int>(img_height*aspect_ratio);
     
     //Camera
@@ -62,7 +67,8 @@ int main()
     camera cam = camera();
 
     //Rendering settings
-    int samples = 20;
+    int samples = 10;
+    int max_bounces=10;
 
     std::cout << "P3\n" << img_width << "\t" << img_height << "\n" << 255<<"\n";
     for (float j = img_height - 1; j >= 0; j--)
@@ -75,7 +81,7 @@ int main()
                 float u = (i+rand_f())/ (img_width - 1);
                 float v = (j+rand_f())/ (img_height - 1);
                 ray r = cam.get_ray(u, v);
-                pixel_col += ray_color(r, scene);
+                pixel_col += ray_color(r, scene,max_bounces);
             }
             write_color(std::cout, pixel_col,samples);
         }

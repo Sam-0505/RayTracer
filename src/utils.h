@@ -44,5 +44,26 @@ inline float clamp(float k,float x, float y)//K is clamped between x and y
 		return k;
 }
 
+inline vec3 rand_vec()
+{
+	return vec3(rand_f(), rand_f(), rand_f());
+}
 
+inline vec3 rand_vec(float min,float max)
+{
+	return vec3(rand_f(min,max), rand_f(min,max), rand_f(min,max));
+}
+
+//Get a vector with length less than 1
+inline vec3 rand_small_vec()
+{
+	while (true)
+	{
+		vec3 v = rand_vec(-1, 1);//These can or cannot be less than length 1
+		if (v.length() > 1)
+			continue;
+		else
+			return v;
+	}
+}
 

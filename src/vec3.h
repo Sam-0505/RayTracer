@@ -75,6 +75,13 @@ class vec3
 			float sqrLen = length_sqr();
 			return std::sqrt(sqrLen);
 		}
+		vec3& sqrt()
+		{
+			e[0] = std::sqrt(e[0]);
+			e[1] = std::sqrt(e[1]);
+			e[2] = std::sqrt(e[2]);
+			return *this;
+		}
 
 };
 
