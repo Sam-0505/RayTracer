@@ -66,4 +66,3 @@ inline vec3 rand_small_vec()
 			return v;
 	}
 }
-

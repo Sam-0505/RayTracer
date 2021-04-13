@@ -27,7 +27,7 @@ color ray_color(ray r,obj_list& scene,int bounce)
     }
     if(scene.on_hit(0.001, infinity, r, hit_val))
     {
-        point3 target = hit_val.point + hit_val.normal + rand_small_vec();
+        point3 target = hit_val.point + hit_val.normal + unit(rand_small_vec());//Making the rand vector unit vector improves the probability distribution
         return 0.5 * (ray_color(ray(hit_val.point, target - hit_val.point), scene, bounce-1));
         //color pcol = 0.5 * (hit_val.normal + 1);//clustured the values of normal from (-1,1) to (0,1)
         //return pcol;
