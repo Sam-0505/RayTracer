@@ -10,11 +10,12 @@ class sphere : public object
 	public:
 		point3 center;
 		float radius;
+        std::shared_ptr<material> mat;
 
     public:
         sphere(){}
-        sphere(point3 cen, float rad)
-            :center(cen), radius(rad)
+        sphere(point3 cen, float rad,shared_ptr<material> mat)
+            :center(cen), radius(rad),mat(mat)
         {}
 
 		virtual bool on_hit(float tmin, float tmax, const ray& r, hit_values& hit_val) const override;
@@ -43,5 +44,6 @@ bool sphere::on_hit(float tmin, float tmax, const ray& r, hit_values& hit_val) c
     hit_val.point = r.at(root);
     vec3 out_normal = unit(hit_val.point - center);
     hit_val.set_normal(r, out_normal);
+    hit_val.mat = mat;
     return true;
 }

@@ -10,6 +10,8 @@
 #include "object.h"
 #include "utils.h"
 #include "camera.h"
+#include "material.h"
+#include "lambertian.h"
 
 using std::make_shared;
 using std::shared_ptr;
@@ -27,8 +29,12 @@ color ray_color(ray r,obj_list& scene,int bounce)
     }
     if(scene.on_hit(0.001, infinity, r, hit_val))
     {
-        point3 target = hit_val.point + hit_val.normal + unit(rand_small_vec());//Making the rand vector unit vector improves the probability distribution
-        return 0.5 * (ray_color(ray(hit_val.point, target - hit_val.point), scene, bounce-1));
+        //point3 target = hit_val.point + hit_val.normal + unit(rand_small_vec());
+        ray scatter_ray;
+        color atten;
+        if(hit_val.mat->scatter(r,scatter_ray,atten,hit_val))
+            return atten * (ray_color(scatter_ray, scene, bounce - 1));
+        return color(0, 0, 0);
         //color pcol = 0.5 * (hit_val.normal + 1);//clustured the values of normal from (-1,1) to (0,1)
         //return pcol;
     }
@@ -60,8 +66,11 @@ int main()
     //Set the scene
     //Add the objects in the scene
     obj_list scene;
-    scene.add(make_shared<sphere>(point3(0, 0, -1), 0.5));
-    scene.add(make_shared<sphere>(point3(0, -100.5, -1), 100));
+
+    shared_ptr<lambertian> mat = make_shared<lambertian>(color(1, 1, 0));
+
+    scene.add(make_shared<sphere>(point3(0, 0, -1), 0.5,mat));
+    scene.add(make_shared<sphere>(point3(0, -100.5, -1), 100,mat));
 
     //Camera 
     camera cam = camera();

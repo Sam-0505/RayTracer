@@ -152,6 +152,9 @@
   <ItemGroup>
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\color.h" />
+    <ClInclude Include="src\lambertian.h" />
+    <ClInclude Include="src\material.h" />
+    <ClInclude Include="src\metal.h" />
     <ClInclude Include="src\object.h" />
     <ClInclude Include="src\obj_list.h" />
     <ClInclude Include="src\ray.h" />

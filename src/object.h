@@ -3,12 +3,14 @@
 #include<iostream>
 #include "./vec3.h"
 #include "./ray.h"
+#include "material.h"
 
 struct hit_values
 {
 	float t;
 	point3 point;
 	vec3 normal;
+	std::shared_ptr<material> mat;
 	bool front_face;
 
 	/*
