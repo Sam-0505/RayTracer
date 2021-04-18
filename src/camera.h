@@ -14,7 +14,7 @@ class camera
 	public:
 		camera()
 		{
-			float aspect_ratio = 16.0 / 9.0;
+			float aspect_ratio = 16.0f / 9.0f;
 			float viewport_height = 2.0;
 			float viewport_width = viewport_height * aspect_ratio;
 			float focal_length = 1.0;

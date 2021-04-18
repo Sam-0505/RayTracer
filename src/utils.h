@@ -1,6 +1,9 @@
 #pragma once
 #define _USE_MATH_DEFINES
 
+//This header file contains multiple utility fucntions used throughout the program 
+//These functions are used multiple times in different sections of the code
+
 #include<math.h>
 #include<limits>
 #include<memory>
@@ -8,6 +11,7 @@
 
 #include "ray.h"
 #include "vec3.h"
+#include "object.h"
 
 using std::shared_ptr;
 using std::make_shared;
@@ -55,7 +59,7 @@ inline vec3 rand_vec(float min,float max)
 }
 
 //Get a vector with length less than 1
-inline vec3 rand_small_vec()
+inline vec3 rand_in_unit_sphere()
 {
 	while (true)
 	{
@@ -65,4 +69,19 @@ inline vec3 rand_small_vec()
 		else
 			return v;
 	}
+}
+
+inline bool check_small_vac(vec3 v) 
+{
+	float k = (float)1e-8;
+	return (fabs(v[0]) < k) && (fabs(v[1]) < k) && (fabs(v[2]) < k);
+}
+
+inline ray reflect(ray& r,hit_values& hit_val)
+{
+	vec3 dir = unit(r.direction());
+	vec3 perpendicular = dot(dir, hit_val.normal) * hit_val.normal;
+	vec3 parallel = dir - perpendicular;
+	vec3 reflect_dir = parallel - perpendicular;
+	return ray(hit_val.point, reflect_dir);
 }

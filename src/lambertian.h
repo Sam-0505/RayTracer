@@ -3,7 +3,6 @@
 #include "material.h"
 #include "utils.h"
 
-struct hit_values;
 class lambertian :public material
 {
 	public:
@@ -14,15 +13,17 @@ class lambertian :public material
 			:albedo(a)
 		{}
 
-		virtual bool scatter(ray& r, ray& scatter_ray, vec3& atten, hit_values& hit_val) const override;
+		virtual bool scatter(ray& r, ray& scatter_ray, color& atten, hit_values& hit_val) const override;
 };
 
-bool lambertian::scatter(ray& r, ray& scatter_ray, vec3& atten, hit_values& hit_val) const 
+bool lambertian::scatter(ray& r, ray& scatter_ray, color& atten, hit_values& hit_val) const 
 {
 
-	vec3 scatter_dir = hit_val.normal + unit(rand_small_vec());//Making the rand vector unit vector improves the probability distribution
+	vec3 scatter_dir = hit_val.normal + unit(rand_in_unit_sphere());//Making the rand vector unit vector improves the probability distribution
+	if (check_small_vac(scatter_dir))
+		scatter_dir = hit_val.normal;
 	scatter_ray = ray(hit_val.point, scatter_dir);
-
+	//std::cerr << "Me lambertion hu\n";
 	atten = albedo;
 	return true;
 }
