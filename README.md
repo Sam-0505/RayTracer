@@ -1,6 +1,6 @@
 # Ray_Tracer
 
-This is a practice game renderer using ray tracing techniques to create 3D images. The language used is C++.
+This is a practice game renderer using ray tracing techniques to create 3D images. The project is created on Visual Studio 2019 and the language used is C++.
 
 # Preview
 
